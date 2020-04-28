@@ -3,8 +3,8 @@
         "apps": [],
         "details": [
             {
-                "appID": "53D2P848US.com.ebenny.SxiMo",
-                "paths": [ "/sixMoapp/wechat/*" ]
+                "appID": "4N73ZQXL9W.com.ebenny.SxiMoDemo",
+                "paths": [ "/sixMoapp/wechat/*","*"]
             }
         ]
     }
