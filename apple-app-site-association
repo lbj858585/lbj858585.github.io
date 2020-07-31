@@ -4,11 +4,11 @@
         "details": [
             {
                 "appID": "CX2KUT9XL3.com.miaoyue.doctor",
-                "paths": [ "/appLink/*","/imdtapp/wechat/*" ]
+                "paths": [ "/imdtapp/appLink/*","/imdtapp/wechat/*" ]
             },
             {
                 "appID": "4N73ZQXL9W.com.ebenny.SxiMoDemo",
-                "paths": [ "/appLink/*","/sixMoapp/wechat/*" ]
+                "paths": [ "/sixMoapp/appLink/*","/sixMoapp/wechat/*" ]
             }
         ]
     }
