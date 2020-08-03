@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<script src="../dist/JsBarcode.all.js"></script>
+	<script>
+		Number.prototype.zeroPadding = function(){
+			var ret = "" + this.valueOf();
+			return ret.length == 1 ? "0" + ret : ret;
+		};
+
+		function GetQueryString(name) {
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+ };
+ function myFunction()
+{
+    alert(GetQueryString("code"));
+};
+
+	</script>
+	<style type="text/css">   
+        *{   
+            margin: 0;   
+            padding: 0;   
+            background-color: #FFFFFF;   
+        }   
+        div{   
+            width: auto;   
+            height: auto;
+        }   
+        .center-in-center{   
+            position: absolute;   
+            top: 40%;   
+            left: 40%;   
+        }   
+    </style>  
+</style> 
+</head>
+<body>
+	
+	<div class="center-in-center">
+
+ 		<img id="barcode1"/ >
+		<script>
+		var code = GetQueryString("code")
+		JsBarcode("#barcode1", code,{
+			height:100,//高度
+            displayValue:true,
+            background:"#eee",//设置条形码的背景
+            margin:15//设置条形码周围的空白边距
+		});
+	</script>
+	</div>
+
+	<!-- <div>
+		<img id="barcode2"/>
+		<script>
+			JsBarcode("#barcode2", "9780199532179", {
+			  format:"EAN13",
+			  displayValue:true,
+			  fontSize:24,
+			  lineColor: "#0cc"
+			});
+		</script>
+	</div> -->
+<!-- 
+	<div>
+		<img id="barcode3"/>
+		<script>JsBarcode("#barcode3", "9780199532179", {
+			format:"EAN13",
+			displayValue:true,
+			fontSize:20
+		});</script>
+	</div>
+
+	<div>
+		<img id="barcode4"/>
+		<script>
+			var repeat4 = function(){
+				var date = new Date();
+				JsBarcode("#barcode4",
+						date.getHours().zeroPadding() + ":" +
+						date.getMinutes().zeroPadding() + ":" +
+						date.getSeconds().zeroPadding(),
+					{displayValue: true});
+			};
+			setInterval(repeat4,1000);
+			repeat4();
+		</script>
+	</div>
+
+	<div>
+		<img id="barcode5"/>
+		<script>
+			var repeat5 = function(){
+				JsBarcode("#barcode5", Math.floor(1000000+Math.random()*9000000)+"",{displayValue:true,fontSize:20});
+			};
+			setInterval(repeat5,500);
+			repeat5();
+		</script>
+	</div> -->
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"> 
+<html> 
+    <head> 
+        <title>点击文字弹出一个DIV层窗口代码</title> 
+        <style> 
+        .black_overlay{ 
+            display: none; 
+            position: absolute; 
+            top: 0%; 
+            left: 0%; 
+            width: 100%; 
+            height: 100%; 
+            background-color: black; 
+            z-index:1001; 
+            -moz-opacity: 0.8; 
+            opacity:.80; 
+            filter: alpha(opacity=88); 
+        } 
+        .white_content { 
+            display: none; 
+            position: absolute; 
+            top: 25%; 
+            left: 25%; 
+            width: 55%; 
+            height: 55%; 
+            padding: 20px; 
+            border: 10px solid orange; 
+            background-color: white; 
+            z-index:1002; 
+            overflow: auto; 
+        } 
+    </style> 
+    </head> 
+    <body> 
+        <p>示例弹出层：<a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">请点这里</a></p> 
+        <div id="light" class="white_content">这是一个层窗口示例程序. 
+<a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">点这里关闭本窗口</a></div> 
+        <div id="fade" class="black_overlay"></div> 
+    </body> 
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>导入表格生成html</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /*背景层*/
+    #popLayer {
+      display: none;
+      background-color: #B3B3B3;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 10;
+      -moz-opacity: 0.8;
+      opacity: .80;
+      filter: alpha(opacity=80);
+      /* 只支持IE6、7、8、9 */
+    }
+
+    /*弹出层*/
+    #popBox {
+      display: none;
+      background-color: #FFFFFF;
+      z-index: 11;
+      width: 600px;
+      height: 300px;
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      margin: auto;
+    }
+
+    #popBox .close {
+      text-align: right;
+      margin-right: 5px;
+      background-color: #F8F8F8;
+    }
+
+    /*关闭按钮*/
+    #popBox .close a {
+      text-decoration: none;
+      color: #2D2C3B;
+    }
+
+    .center-in-center {
+      position: absolute;
+      top: 20%;
+      left: 20%;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="popLayer"></div>
+  <div id="popBox">
+    <div class="close">
+      <a href="javascript:void(0)" onclick="closeBox()">关闭</a>
+    </div>
+    <div class="center-in-center">
+      <img id="barcode1" />
+    </div>
+  </div>
+
+  <ul id="myohmy">
+    <li id="eatcrab">
+      <h5 class="text-primary my-1"><span style="margin-right:0.2rem">•</span>excel表格数据</h5>
+      <div class="ml-3 table-responsive">
+        <table style="width:100%">
+          <tbody>
+            <!-- put cells -->
+          </tbody>
+        </table>
+      </div>
+    </li>
+  </ul>
+
+  <div id="inputWrapper">
+    <!-- 切换合并方式 -->
+    <div id="changeArea">
+      <!--  <p><label for="horizontalMerge">单元格水平方向:</label>
+        <select id="horizontalMerge">
+          <option value="不合并">不合并</option>
+          <option value="合并">合并</option>
+        </select>
+      </p>
+      <p>
+        <label for="verticalMerge">单元格垂直方向:</label>
+        <select id="verticalMerge">
+          <option value="不合并">不合并</option>
+          <option value="合并">合并</option>
+        </select>
+      </p> -->
+      <!-- 导入表格数据的按钮 -->
+      <p>
+        当前文件：
+        <span id="currentFile"><span class="gray">请导入Excel表格</span></span>
+        <input type="file" onchange="importExcel(this,false,importSuccessCallback)" id="uploadFile" />
+      </p>
+    </div>
+    <!-- 复制指定区域(data-clipboard-target)按钮 -->
+    <!-- <div id="copyArea">
+      <input id="copyboard" style="opacity:0;">
+      <div id="copyBtn" data-clipboard-target="#copyboard">点击复制</div>
+    </div> -->
+  </div>
+
+  <script src="js/jquery-1.7.2.min.js"></script>
+  <!-- 复制页面的插件 -->
+  <script src="js/clipboard.min.js"></script>
+  <!-- 表格数据转json插件 -->
+  <script src="js/xlsx.full.min.js"></script>
+  <!-- 表格数据转json -->
+  <script src="js/importExcel.js"></script>
+  <!-- 页面渲染 -->
+  <script src="js/excel2html.js"></script>
+  <script src="dist/JsBarcode.all.js"></script>
+  <script>
+    function selectCustomerDb(obj) {
+      var value = $(obj).text();
+      if ($(obj).css('background-color') === 'rgb(255, 0, 0)') { // 选中状态
+        $(obj).css('background-color', 'white');
+      } else { //未选择状态
+        $(obj).css('background-color', 'red');
+        popBox(value);
+      }
+    };
+    /*点击弹出按钮*/
+    function popBox(code) {
+      var popBox = document.getElementById("popBox");
+      var popLayer = document.getElementById("popLayer");
+      popBox.style.display = "block";
+      popLayer.style.display = "block";
+      JsBarcode("#barcode1", code, {
+        height: 100,//高度
+        displayValue: true,
+        background: "#eee",//设置条形码的背景
+        margin: 15//设置条形码周围的空白边距
+      });
+    };
+
+    /*点击关闭按钮*/
+    function closeBox() {
+      var popBox = document.getElementById("popBox");
+      var popLayer = document.getElementById("popLayer");
+      popBox.style.display = "none";
+      popLayer.style.display = "none";
+    }
+
+
+  </script>
+
+</body>
+
+</html>
