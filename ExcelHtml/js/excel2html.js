@@ -70,7 +70,8 @@ function renderPage(data, horizontalMerge, verticalMerge) {
         item[key] = pointer[key].val;
         pointer[key].num = pointer[key].num + 1;
       }
-      var align = j == 3 || j == 4 ? 'align="center"' : ';'
+      // var align = j == 3 || j == 4 ? 'align="center"' : ';'
+      var align = 'align="center"'
       trStr += '<td nowrap '+align+' index="' + i + ',' + j + '" onclick="selectCustomerDb(this)" >' + item[key] + '</td>';
     };
     trStr += '</tr>'

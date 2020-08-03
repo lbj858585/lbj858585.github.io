@@ -72,8 +72,8 @@
       display: none;
       background-color: #FFFFFF;
       z-index: 11;
-      width: 600px;
-      height: 300px;
+      width: 400px;
+      height: 200px;
       position: fixed;
       top: 0;
       right: 0;
@@ -95,9 +95,7 @@
     }
 
     .center-in-center {
-      position: absolute;
-      top: 20%;
-      left: 20%;
+      text-align: center;
     }
   </style>
 
@@ -151,7 +149,7 @@
       </p>
     </div>
     <!-- 复制指定区域(data-clipboard-target)按钮 -->
-    <!-- <div id="copyArea">
+  <!--   <div id="copyArea">
       <input id="copyboard" style="opacity:0;">
       <div id="copyBtn" data-clipboard-target="#copyboard">点击复制</div>
     </div> -->
@@ -170,11 +168,14 @@
   <script>
     function selectCustomerDb(obj) {
       var value = $(obj).text();
-      if ($(obj).css('background-color') === 'rgb(255, 0, 0)') { // 选中状态
+      var index = $(obj).index();
+      if (index) {
+      	if ($(obj).css('background-color') === 'rgb(255, 0, 0)') { // 选中状态
         $(obj).css('background-color', 'white');
       } else { //未选择状态
         $(obj).css('background-color', 'red');
         popBox(value);
+      }
       }
     };
     /*点击弹出按钮*/
